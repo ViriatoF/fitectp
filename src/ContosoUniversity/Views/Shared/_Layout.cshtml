@@ -28,18 +28,81 @@
                 </button>
                 @Html.ActionLink("Contoso University", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Students", "Index", "Student")</li>
-                    <li>@Html.ActionLink("Courses", "Index", "Course")</li>
-                    <li>@Html.ActionLink("Instructors", "Index", "Instructor")</li>
-                    <li>@Html.ActionLink("Departments", "Index", "Department")</li>
-                    <li>@Html.ActionLink("Login", "Index", "Account")</li>
+
+
+            @*J'ai ajouté les boutons pour Register et Login*@
+
+
+            <div class="dropdown pull-right">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-lock"></i> My Account
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                    @{ if (Session["User"] == null)
+                        {
+                            <li class="dropdown-item">@Html.ActionLink("Login", "Index", "Account")</li>
+                        }
+                        else
+                        {
+                            <li class="dropdown-item">@Html.ActionLink("Logout", "Logout", "Account")</li>
+                        }
+                        }
+
+
+                    @*<li class="dropdown-item">@Html.ActionLink("Login", "Index", "Account")</li>*@
+                    
+
+                </ul>
+                </div>
+            @*buton de regestir now*@
+            <div class="dropdown pull-right">
+                @{
+                    if (Session["User"] != null)
+                    {
+                        <button class="hidden" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-lock"></i> Register Now!
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-lock"></i> Register Now!
+                        </button>
+                    }
+                }
+
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li class="dropdown-item">@Html.ActionLink("Student", "LoginStudent", "Account", htmlAttributes: new { @class = "visible" })</li>
+                    <li class="dropdown-item">@Html.ActionLink("Instructor", "LoginInstructor", "Account", htmlAttributes: new { @class = "visible" })</li>
+
+
+
+
+
+                    @*@Html.ActionLink("Instructor", "LoginInstructor", "Login")*@
+
                 </ul>
             </div>
-        </div>
+
+              
+
+
+
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Students", "Index", "Student")</li>
+                        <li>@Html.ActionLink("Courses", "Index", "Course")</li>
+                        <li>@Html.ActionLink("Instructors", "Index", "Instructor")</li>
+                        <li>@Html.ActionLink("Departments", "Index", "Department")</li>
+                        @* <li>@Html.ActionLink("Login", "Index", "Account")</li>*@
+                    </ul>
+                </div>
+
+
+            </div>
     </div>
     <div class="container body-content">
         @RenderBody()

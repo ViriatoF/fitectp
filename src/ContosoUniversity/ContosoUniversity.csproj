@@ -160,6 +160,14 @@
     <Compile Include="Migrations\201902032026291_Initial2.Designer.cs">
       <DependentUpon>201902032026291_Initial2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902040927306_Initial3.cs" />
+    <Compile Include="Migrations\201902040927306_Initial3.Designer.cs">
+      <DependentUpon>201902040927306_Initial3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902051406267_Initial4.cs" />
+    <Compile Include="Migrations\201902051406267_Initial4.Designer.cs">
+      <DependentUpon>201902051406267_Initial4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Department.cs" />
@@ -172,6 +180,7 @@
     <Compile Include="ViewModels\AssignedCourseData.cs" />
     <Compile Include="ViewModels\EnrollmentDateGroup.cs" />
     <Compile Include="ViewModels\InstructorIndexData.cs" />
+    <Compile Include="ViewModels\PersonRegisterVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -238,6 +247,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Home\Singin.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -267,6 +277,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902032026291_Initial2.resx">
       <DependentUpon>201902032026291_Initial2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902040927306_Initial3.resx">
+      <DependentUpon>201902040927306_Initial3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902051406267_Initial4.resx">
+      <DependentUpon>201902051406267_Initial4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

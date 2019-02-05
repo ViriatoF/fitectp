@@ -44,7 +44,7 @@ namespace ContosoUniversity.Migrations
             var instructors = new List<Instructor>
             {
                 new Instructor { FirstMidName = "Kim",     LastName = "Abercrombie", 
-                    HireDate = DateTime.Parse("1995-03-11"),Email ="yahya@gmail.com",Password="123456"  },
+                    HireDate = DateTime.Parse("1995-03-11"),Email ="vito@gmail.com",Password="123456"  },
                 new Instructor { FirstMidName = "Fadi",    LastName = "Fakhouri",    
                     HireDate = DateTime.Parse("2002-07-06"),Email ="yahya@gmail.com",Password="123456"  },
                 new Instructor { FirstMidName = "Roger",   LastName = "Harui",       
