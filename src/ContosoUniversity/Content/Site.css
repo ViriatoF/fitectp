@@ -22,3 +22,13 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#dropdownMenuButton1{
+    margin-top: 8px;
+}
+
+#dropdownMenuButton2 {
+    margin-top: 8px;
+    margin-right: 8px;
+   
+}

@@ -45,6 +45,12 @@ namespace ContosoUniversity.Controllers
             return View();
         }
 
+        public ActionResult Singin()
+        {
+            ViewBag.Message = "Welcome!";
+
+            return View();
+        }
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

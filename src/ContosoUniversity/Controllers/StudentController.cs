@@ -13,6 +13,7 @@ using ContosoUniversity.ViewModels;
 
 namespace ContosoUniversity.Controllers
 {
+    
     public class StudentController : Controller
     {
         private SchoolContext db = new SchoolContext();
@@ -21,10 +22,13 @@ namespace ContosoUniversity.Controllers
             get { return db; }
             set { db = value; }
         }
-
+        //[Authorize]
         // GET: Student
+        
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+          
+
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";

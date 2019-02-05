@@ -20,6 +20,13 @@ namespace ContosoUniversity.Controllers
         // GET: Instructor
         public ActionResult Index(int? id, int? courseID)
         {
+
+            //TODO: Creata an abstract class for authorized method  
+            //Access route
+            if (Session["User"] != null && Session["User"] is Student)
+            {
+                return RedirectToAction(actionName: "Index", controllerName: "Home");
+            }
             var viewModel = new InstructorIndexData();
 
             viewModel.Instructors = db.Instructors
