@@ -44,16 +44,13 @@
         </dt>
 
         <dd>
-
-            <button>@Html.ActionLink("Create", "Create", "Enrollments", new { id = Model.ID } )</button>
-            @*@Html.DropDownListFor(model => model.Enrollments,
-                                                 selectList: new SelectList(
-                                                     items: ViewBag.ListCourses,
-                                                     dataValueField: "CourseID",
-                                                     dataTextField: "Title"),
-                                                 htmlAttributes: new { @class = "form-control" })*@
-
-            @*<input type="submit" value="Inscription" class="btn btn-default" />*@
+            @* On créé un lien pour accéder à la création d'enrollment *@
+           @Html.ActionLink(linkText: "Create",
+                                                    actionName: "Create",
+                                                    controllerName: "Enrollments",
+                                                    routeValues: new { id=Model.ID},
+                                                    htmlAttributes: new {@class = "btn btn-default btn-sm" }
+                                                    )
 
         </dd>
         
@@ -87,5 +84,4 @@
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
-    @Html.ActionLink("Enrollment", "Enrollments")
 </p>

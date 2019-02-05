@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -38,10 +39,11 @@ namespace ContosoUniversity.Controllers
         }
 
         // GET: Enrollments/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
             ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "Title");
             ViewBag.StudentID = new SelectList(db.People, "ID", "LastName");
+            //ViewBag.CurrentStudent = db.Students.FirstOrDefault(e => e.ID == id);
             return View();
         }
 
@@ -50,18 +52,41 @@ namespace ContosoUniversity.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EnrollmentID,CourseID,StudentID,Grade")] Enrollment enrollment)
+        public ActionResult Create(int? id,[Bind(Include = "EnrollmentID,CourseID,StudentID,Grade")] Enrollment enrollment)
         {
+           // On verifie si les champs sont remplis
             if (ModelState.IsValid)
             {
-                db.Enrollments.Add(enrollment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    //On vérifie si l'enrollment existe déjà dans la base de donnée
+                    if (!db.Enrollments.Where(o => o.StudentID == enrollment.StudentID && o.CourseID == enrollment.CourseID).Any())
+                    {
+                        //Si elle n'existe pas, on l'ajoute à la BDD
+                        db.Enrollments.Add(enrollment);
+                        db.SaveChanges();
+                        return RedirectToAction("Index", "Student");
+                    }
+                    //Si elle existe déjà, on renvoie un message d'erreur dans la vue
+                    else
+                    {
+                        //Message d'erreur si l'enrollment existe déjà dans la BDD
+                        ViewBag.SuscribeError = "You already subscribed to this lesson";
+                    }
+                }
+                catch (Exception)
+                {
+                    
+                }
+                
+                
             }
-
-            ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "Title", enrollment.CourseID);
-            ViewBag.StudentID = new SelectList(db.People, "ID", "LastName", enrollment.StudentID);
-            return View(enrollment);
+                ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "Title", enrollment.CourseID);
+                //ViewBag.CurrentStudent = db.Students.FirstOrDefault(e => e.ID == id);
+                ViewBag.StudentID = new SelectList(db.People, "ID", "LastName", enrollment.StudentID);
+                return View(enrollment);
+            
+            
         }
 
         // GET: Enrollments/Edit/5
