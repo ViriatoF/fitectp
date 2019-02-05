@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ContosoUniversity.Models
 {
-    public abstract class Person
+    public  class Person
     {
         public int ID { get; set; }
 

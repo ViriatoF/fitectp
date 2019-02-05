@@ -7,6 +7,9 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Data.Entity;
+using System.Collections.Generic;
+using ContosoUniversity.ViewModels;
 
 namespace ContosoUniversity.Controllers
 {
@@ -67,6 +70,7 @@ namespace ContosoUniversity.Controllers
 
 
         // GET: Student/Details/5
+        [HttpGet]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -74,12 +78,17 @@ namespace ContosoUniversity.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Student student = db.Students.Find(id);
+
+            // Ajout de la liste des cours afin de pouvoir l'utiliser dans le Détails
+            ViewBag.ListCourses = db.Courses.Where(m=> m.Title != null).ToList() ;
+
             if (student == null)
             {
                 return HttpNotFound();
             }
             return View(student);
         }
+
 
         // GET: Student/Create
         public ActionResult Create()
