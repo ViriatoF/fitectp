@@ -3,7 +3,7 @@ namespace ContosoUniversity.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial4 : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -20,10 +20,14 @@ namespace ContosoUniversity.Migrations
                     })
                 .PrimaryKey(t => t.ID);
             
+            AddColumn("dbo.Person", "Email", c => c.String(nullable: false));
+            AddColumn("dbo.Person", "Password", c => c.String(nullable: false));
         }
         
         public override void Down()
         {
+            DropColumn("dbo.Person", "Password");
+            DropColumn("dbo.Person", "Email");
             DropTable("dbo.PersonRegisterVM");
         }
     }

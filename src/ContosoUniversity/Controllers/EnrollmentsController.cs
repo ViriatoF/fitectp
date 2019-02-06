@@ -52,13 +52,14 @@ namespace ContosoUniversity.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int? id,[Bind(Include = "EnrollmentID,CourseID,StudentID,Grade")] Enrollment enrollment)
+        public ActionResult Create(int id,[Bind(Include = "EnrollmentID,CourseID,Grade")] Enrollment enrollment)
         {
            // On verifie si les champs sont remplis
             if (ModelState.IsValid)
             {
                 try
                 {
+                    enrollment.StudentID = id;
                     //On vérifie si l'enrollment existe déjà dans la base de donnée
                     if (!db.Enrollments.Where(o => o.StudentID == enrollment.StudentID && o.CourseID == enrollment.CourseID).Any())
                     {

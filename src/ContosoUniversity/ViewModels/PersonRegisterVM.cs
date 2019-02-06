@@ -12,15 +12,16 @@ namespace ContosoUniversity.ViewModels
 
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Last name is required.")]
         [StringLength(50)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [Required]
-        [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
+
+        [Required(ErrorMessage = "First name is required.")]
+         [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
         [Column("FirstName")]
         [Display(Name = "First Name")]
-        public string FirstMidName { get; set; }
+        public string FirstName { get; set; }
 
 
         [Required(ErrorMessage = "Email is required.")]
@@ -41,7 +42,7 @@ namespace ContosoUniversity.ViewModels
         {
             get
             {
-                return LastName + ", " + FirstMidName;
+                return LastName + ", " + FirstName;
             }
         }
     }

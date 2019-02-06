@@ -13,6 +13,7 @@ namespace ContosoUniversity.Controllers
     public class AccountController : Controller
     {
         private SchoolContext db = new SchoolContext();
+
         // GET: Account
         [HttpGet]
         public ActionResult Index()
@@ -20,6 +21,7 @@ namespace ContosoUniversity.Controllers
             var errMsg = TempData["ErrorMessage"] as string; //To import an error message with redirectoaction 
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
@@ -71,6 +73,7 @@ namespace ContosoUniversity.Controllers
             }
             return View();
         }
+
         public ActionResult Logout()
         {
             Session.Clear();
@@ -80,24 +83,13 @@ namespace ContosoUniversity.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            //List<string> ListeStudentInstructor = new List<string>();
-            //ListeStudentInstructor.Add("Student");
-            //ListeStudentInstructor.Add("Instructor");
-           // ViewBag.liste = ListeStudentInstructor;
-
-            // Add some elements to the dictionary. There are no 
-            // duplicate keys, but some of the values are duplicates.
-            //liste.Add("ID", "Type");
-            //liste.Add("1", "Student");
-            //liste.Add("2", "Instructor");
-            //ViewBag.liste = liste;
-            //ViewBag.key = liste.Keys;
+        
 
             List<SelectListItem> myList = new List<SelectListItem>();
-            var data = new[]{
-                 new SelectListItem{ Value="1",Text="Student"},
-                 new SelectListItem{ Value="2",Text="Instructor"},
-             };
+            //var data = new[]{
+            //     new SelectListItem{ Value="1",Text="Student"},
+            //     new SelectListItem{ Value="2",Text="Instructor"},
+            // };
             myList.Add(new SelectListItem { Value = "1", Text = "Student" });
             myList.Add(new SelectListItem { Value = "2", Text = "Instructor" });
 
@@ -106,39 +98,60 @@ namespace ContosoUniversity.Controllers
             ViewBag.liste = myList;
             return View();
         }
+
         [HttpPost]
         public ActionResult Register(PersonRegisterVM User)
         {
-            if (db.People.Any(m=>m.Email==User.Email))
+            if (ModelState.IsValid)
             {
-                TempData["errorMail"] = "Email exist already!";
-                return RedirectToAction("Register");
-            }
+                if (db.People.Any(m => m.Email == User.Email))
+                {
+                    TempData["errorMail"] = "Email exist already!";
+                    return RedirectToAction("Register");
+                }
 
-            if (User.Role =="Student")
-            {
-                Student st = new Student();
-                st.Email = User.Email;
-                st.LastName = User.LastName;
-                st.FirstMidName = User.FirstMidName;
-                st.Password = User.Password;
-                st.EnrollmentDate = DateTime.Now;
-                db.Students.Add(st);
+                if (User.Role == "1")
+                {
+                    Student st = new Student();
+                    st.Email = User.Email;
+                    st.LastName = User.LastName;
+                    st.FirstMidName = User.FirstName;
+                    st.Password = User.Password;
+                    st.EnrollmentDate = DateTime.Now;
+                    db.Students.Add(st);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Student");
 
-            }
-            if (User.Role == "Instructor")
-            {
-                Instructor ins = new Instructor();
-                ins.Email = User.Email;
-                ins.LastName = User.LastName;
-                ins.FirstMidName = User.FirstMidName;
-                ins.Password = User.Password;
-                ins.HireDate = DateTime.Now;
-                db.Instructors.Add(ins);
+                }
+                if (User.Role == "2")
+                {
+                    Instructor ins = new Instructor();
+                    ins.Email = User.Email;
+                    ins.LastName = User.LastName;
+                    ins.FirstMidName = User.FirstName;
+                    ins.Password = User.Password;
+                    ins.HireDate = DateTime.Now;
+                    db.Instructors.Add(ins);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Instructor");
 
+
+                }
             }
-            db.SaveChanges();
-            return RedirectToAction("Register");
+            List<SelectListItem> myList = new List<SelectListItem>();
+            //var data = new[]{
+            //     new SelectListItem{ Value="1",Text="Student"},
+            //     new SelectListItem{ Value="2",Text="Instructor"},
+            // };
+            myList.Add(new SelectListItem { Value = "1", Text = "Student" });
+            myList.Add(new SelectListItem { Value = "2", Text = "Instructor" });
+
+            //myList = data.ToList();
+
+            ViewBag.liste = myList;
+            return View();
+            
+            //return RedirectToAction("Register");
         }
     }
 }
