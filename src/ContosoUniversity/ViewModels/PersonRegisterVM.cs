@@ -45,5 +45,6 @@ namespace ContosoUniversity.ViewModels
                 return LastName + ", " + FirstName;
             }
         }
+     
     }
 }

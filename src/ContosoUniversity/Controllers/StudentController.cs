@@ -81,7 +81,7 @@ namespace ContosoUniversity.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = db.Students.Find(id);
+            Student student = db.Students.Include(i => i.FilePaths).SingleOrDefault(x=>x.ID==id);
 
             // Ajout de la liste des cours afin de pouvoir l'utiliser dans le Détails
             ViewBag.ListCourses = db.Courses.Where(m=> m.Title != null).ToList() ;
