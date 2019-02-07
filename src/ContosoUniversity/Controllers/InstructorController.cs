@@ -25,7 +25,8 @@ namespace ContosoUniversity.Controllers
             //Access route
             if (Session["User"] != null && Session["User"] is Student)
             {
-                return RedirectToAction(actionName: "Index", controllerName: "Home");
+                return HttpNotFound();
+                //return RedirectToAction(actionName: "Index", controllerName: "Home");
             }
             var viewModel = new InstructorIndexData();
 

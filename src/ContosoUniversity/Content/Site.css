@@ -23,12 +23,27 @@ textarea {
     max-width: 280px;
 }
 
-#dropdownMenuButton1{
+#dropdownMenuButton1 {
     margin-top: 8px;
+    background-color: white;
 }
 
 #dropdownMenuButton2 {
     margin-top: 8px;
     margin-right: 8px;
    
+}
+.navbar{
+    background-color: none;
+}
+
+#register {
+    margin-top: 8px;
+    margin-right: 8px;
+    background-color: white;
+}
+
+#register a{
+    color:black;
+    text-decoration: none;
 }

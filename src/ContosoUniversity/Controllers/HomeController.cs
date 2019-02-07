@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ContosoUniversity.DAL;
+using ContosoUniversity.Models;
 using ContosoUniversity.ViewModels;
 
 
@@ -15,7 +16,13 @@ namespace ContosoUniversity.Controllers
 
         public ActionResult Index()
         {
-            return View();
+
+            List<Course> ListCourses = this.db.Courses.ToList();
+
+
+
+            return View(ListCourses);
+            
         }
 
         public ActionResult About()
