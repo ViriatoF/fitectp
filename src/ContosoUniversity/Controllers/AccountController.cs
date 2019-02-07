@@ -1,4 +1,5 @@
 ﻿using ContosoUniversity.DAL;
+using ContosoUniversity.Enums;
 using ContosoUniversity.Models;
 using ContosoUniversity.ViewModels;
 using System;
@@ -100,7 +101,7 @@ namespace ContosoUniversity.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(PersonRegisterVM User)
+        public ActionResult Register(PersonRegisterVM User, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
@@ -110,39 +111,79 @@ namespace ContosoUniversity.Controllers
                     return RedirectToAction("Register");
                 }
 
-                if (User.Role == "1")
+                //ulpoadinf image png and jpg
+
+                //supporting an image
+                if (file != null && 0 < file.ContentLength)
                 {
-                    Student st = new Student();
-                    st.Email = User.Email;
-                    st.LastName = User.LastName;
-                    st.FirstMidName = User.FirstName;
-                    st.Password = User.Password;
-                    st.EnrollmentDate = DateTime.Now;
-                    db.Students.Add(st);
-                    db.SaveChanges();
-                    return RedirectToAction("Index", "Student");
 
-                }
-                if (User.Role == "2")
-                {
-                    Instructor ins = new Instructor();
-                    ins.Email = User.Email;
-                    ins.LastName = User.LastName;
-                    ins.FirstMidName = User.FirstName;
-                    ins.Password = User.Password;
-                    ins.HireDate = DateTime.Now;
-                    db.Instructors.Add(ins);
-                    db.SaveChanges();
-                    return RedirectToAction("Index", "Instructor");
+                    var photo = new FilePath
+                    {
+                        FileName = System.IO.Path.GetFileName(file.FileName),
+                        FileType = FileType.png
+                    };
+
+                    //only format png and jpg
+                    if (file.ContentType != "image/" + FileType.png.ToString() && file.ContentType != "image/" + FileType.jpeg.ToString())
+                    {
+                        photo.FileType = FileType.png;
+                        TempData["ErrorUploading"] = "Format Image not supported!";
+                        return RedirectToAction("Register");
+                    }
+
+                    //MAxByteValue 100kb;
+                    if (file.ContentLength > 100 * 1000)
+                    {
+                        TempData["ErrorUploadingTaille"] = "Size Image not supported!";
+                        return RedirectToAction("Register");
+                    }
 
 
+
+                    if (User.Role == "1")
+                    {
+                        Student st = new Student();
+                        st.Email = User.Email;
+                        st.LastName = User.LastName;
+                        st.FirstMidName = User.FirstName;
+                        st.Password = User.Password;
+                        st.EnrollmentDate = DateTime.Now;
+                        st.FilePaths = new List<FilePath>();
+                        st.FilePaths.Add(photo);
+
+                        db.Students.Add(st);
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index", "Student");
+
+                    }
+
+                  
+
+
+                    if (User.Role == "2")
+                    {
+                        Instructor ins = new Instructor();
+                        ins.Email = User.Email;
+                        ins.LastName = User.LastName;
+                        ins.FirstMidName = User.FirstName;
+                        ins.Password = User.Password;
+                        ins.HireDate = DateTime.Now;
+
+                        ins.FilePaths = new List<FilePath>();
+                        ins.FilePaths.Add(photo);
+
+                        db.Instructors.Add(ins);
+                        db.SaveChanges();
+                        return RedirectToAction("Index", "Instructor");
+
+
+                    }
                 }
             }
+            
             List<SelectListItem> myList = new List<SelectListItem>();
-            //var data = new[]{
-            //     new SelectListItem{ Value="1",Text="Student"},
-            //     new SelectListItem{ Value="2",Text="Instructor"},
-            // };
+            
             myList.Add(new SelectListItem { Value = "1", Text = "Student" });
             myList.Add(new SelectListItem { Value = "2", Text = "Instructor" });
 
@@ -153,5 +194,6 @@ namespace ContosoUniversity.Controllers
             
             //return RedirectToAction("Register");
         }
+
     }
 }

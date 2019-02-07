@@ -128,43 +128,25 @@
     <Compile Include="DAL\SchoolInitializer.cs" />
     <Compile Include="DAL\SchoolInterceptorLogging.cs" />
     <Compile Include="DAL\SchoolInterceptorTransientErrors.cs" />
+    <Compile Include="Enums\FileType.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
-    <Compile Include="Migrations\201411021828194_InitialCreate.cs" />
-    <Compile Include="Migrations\201411021828194_InitialCreate.Designer.cs">
-      <DependentUpon>201411021828194_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201902070929116_FileImages.cs" />
+    <Compile Include="Migrations\201902070929116_FileImages.Designer.cs">
+      <DependentUpon>201902070929116_FileImages.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201411021834484_MaxLengthOnNames.cs" />
-    <Compile Include="Migrations\201411021834484_MaxLengthOnNames.Designer.cs">
-      <DependentUpon>201411021834484_MaxLengthOnNames.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411021841373_ComplexDataModel.cs" />
-    <Compile Include="Migrations\201411021841373_ComplexDataModel.Designer.cs">
-      <DependentUpon>201411021841373_ComplexDataModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411021957458_DepartmentSP.cs" />
-    <Compile Include="Migrations\201411021957458_DepartmentSP.Designer.cs">
-      <DependentUpon>201411021957458_DepartmentSP.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411022009135_RowVersion.cs" />
-    <Compile Include="Migrations\201411022009135_RowVersion.Designer.cs">
-      <DependentUpon>201411022009135_RowVersion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411022351064_Inheritance.cs" />
-    <Compile Include="Migrations\201411022351064_Inheritance.Designer.cs">
-      <DependentUpon>201411022351064_Inheritance.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201902061107228_Initial.cs" />
-    <Compile Include="Migrations\201902061107228_Initial.Designer.cs">
-      <DependentUpon>201902061107228_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201902070949177_imageTest.cs" />
+    <Compile Include="Migrations\201902070949177_imageTest.Designer.cs">
+      <DependentUpon>201902070949177_imageTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Enrollment.cs" />
+    <Compile Include="Models\FilePath.cs" />
     <Compile Include="Models\Instructor.cs" />
     <Compile Include="Models\OfficeAssignment.cs" />
     <Compile Include="Models\Person.cs" />
@@ -255,26 +237,11 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201411021828194_InitialCreate.resx">
-      <DependentUpon>201411021828194_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902070929116_FileImages.resx">
+      <DependentUpon>201902070929116_FileImages.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411021834484_MaxLengthOnNames.resx">
-      <DependentUpon>201411021834484_MaxLengthOnNames.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411021841373_ComplexDataModel.resx">
-      <DependentUpon>201411021841373_ComplexDataModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411021957458_DepartmentSP.resx">
-      <DependentUpon>201411021957458_DepartmentSP.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411022009135_RowVersion.resx">
-      <DependentUpon>201411022009135_RowVersion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411022351064_Inheritance.resx">
-      <DependentUpon>201411022351064_Inheritance.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902061107228_Initial.resx">
-      <DependentUpon>201902061107228_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902070949177_imageTest.resx">
+      <DependentUpon>201902070949177_imageTest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
