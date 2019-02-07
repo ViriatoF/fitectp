@@ -26,11 +26,11 @@ namespace ContosoUniversity.API
             //On créé une liste qu'on passera dans le dictionnaire pour les CourseId
             List<string> listCourseId = new List<string>();
 
-            listProp.Add("Id : ", student.ID.ToString());
+            listProp.Add("Id : ", student.ID);
             listProp.Add("Last name : ", student.LastName);
-            listProp.Add("first name : ", student.FirstMidName);
+            listProp.Add("First name : ", student.FirstMidName);
             listProp.Add("Enrollment date : ", student.EnrollmentDate.ToString());
-            listProp.Add("enrollments : ", listCourseId);
+            listProp.Add("Enrollments : ", listCourseId);
             
             //On ajoute à la liste chaque courseId trouvée
             foreach (var item in student.Enrollments)

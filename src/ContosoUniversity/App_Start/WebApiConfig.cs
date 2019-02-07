@@ -17,10 +17,6 @@ namespace ContosoUniversity
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
-            //Par défaut, le format est en XML donc il faut le passer en JSON
-            config.Formatters.Clear();
-            config.Formatters.Add(new JsonMediaTypeFormatter());
         }
     }
 }
