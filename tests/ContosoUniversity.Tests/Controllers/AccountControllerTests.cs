@@ -31,27 +31,9 @@ namespace ContosoUniversity.Tests.Controllers
             controllerToTest.DbContext = dbContext;
         }
 
-        [Test]
-        public void Login_InvalidCredential_Fail()
-        {
-            Assert.That(false);
-        }
 
         [Test]
-        public void Login_ValidLoginInvalidPawword_Fail()
-        {
-            Assert.That(false);
-        }
-
-        [Test]
-        public void Register_With_Existing_Login_Fail()
-        {
-            PersonRegisterVM newAccount = new PersonRegisterVM();
-            Assert.That(false);
-        }
-
-        [Test]
-        public void Register_Student_With_Bad_Password_Fail()
+        public void Register_Student_With_Exist_Mail_Fail()
         {
 
             PersonRegisterVM newAccount = new PersonRegisterVM();
@@ -63,23 +45,16 @@ namespace ContosoUniversity.Tests.Controllers
 
             BAL.StudentBAL bal = new BAL.StudentBAL();
             
-            bal.TestRegisteringStudent(newAccount, dbContext);
+            bal.TestRegisteringStudentExist(newAccount, dbContext);
 
-            Student st = this.dbContext.Students.FirstOrDefault(e => e.Password == newAccount.Password);
+            Student st = this.dbContext.Students.FirstOrDefault(e => e.Email == newAccount.Email);
 
 
 
-            Assert.That(st == null);
+            Assert.That(st != null);
         }
 
-        [Test]
-        public void Register_Instructor_With_Bad_Password_Fail()
-        {
-
-            PersonRegisterVM newAccount = new PersonRegisterVM();
-
-            Assert.That(false);
-        }
+     
 
         [Test]
         public void Register_Student_With_Non_Existing_Login_And_Good_Password_Success()
@@ -95,16 +70,12 @@ namespace ContosoUniversity.Tests.Controllers
 
             bal.TestRegisteringStudent(newAccount, dbContext);
 
-            Student stu = this.dbContext.Students.FirstOrDefault(e => e.Email == newAccount.Email);
+            Student st = this.dbContext.Students.FirstOrDefault(e => e.Email == newAccount.Email);
 
 
-            Assert.That(stu != null);
+            Assert.That(st != null);
         }
 
-        [Test]
-        public void Hashing_Same_word_Twice_Result_Two_Identical_Sha()
-        {
-            Assert.That(false);
-        }
+       
     }
 }

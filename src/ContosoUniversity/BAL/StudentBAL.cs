@@ -21,7 +21,7 @@ namespace ContosoUniversity.BAL
             st.FirstMidName = TestAccount.FirstName;
             st.Password = TestAccount.Password;
             st.EnrollmentDate = DateTime.Now;
-            //st.FilePaths = new List<FilePath>();
+            st.FilePaths = new List<FilePath>();
             //st.FilePaths.Add(photo);
 
             db.Students.Add(st);
@@ -31,15 +31,14 @@ namespace ContosoUniversity.BAL
             return st;
         }
 
-        //public ActionResult TestRegisteringStudentExist(PersonRegisterVM TestAccount, SchoolContext db)
-        //{
-        //    if (db.People.Any(m => m.Email == TestAccount.Email))
-        //    {
-        //        TempData["errorMail"] = "Email exist already!";
-        //        return RedirectToAction("Register");
-        //    }
-
-        //}
+        public bool TestRegisteringStudentExist(PersonRegisterVM TestAccount, SchoolContext db)
+        {
+            if (db.People.Any(m => m.Email == TestAccount.Email))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
     

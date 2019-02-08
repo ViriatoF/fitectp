@@ -4,7 +4,6 @@ using ContosoUniversity.Models;
 using ContosoUniversity.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
@@ -33,21 +32,26 @@ namespace ContosoUniversity.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult Index([Bind(Include = "Email,Password")]string aEmail, string aPassword)
+        public ActionResult Index([Bind(Include = "Email,Password")]Student student)
         {
             //string a = student.Email;
             if (!ModelState.IsValid)
             {
 
-           
+           // Type a =db.People.Where(x => x.Email == student.Email).GetType();
             
                 // TODO : Extract predicates for authentication to  avoid duplication above
+                //s'il a un etudiant correspondant 
+                //int validEmailS = db.Students.Where(x => x.Email == student.Email && x.Password.Equals(student.Password)).Count(); //|| db.Instructors.Any(x => x.Email == aEmail);
                 
+                //s'il a un Instructor correspondant 
+                //int validEmailI = db.Instructors.Where(x => x.Email == student.Email && x.Password.Equals(student.Password)).Count(); //|| db.Instructors.Any(x => x.Email == aEmail);
 
 
-                Person aPerson = db.People.Where(x => x.Email == aEmail && x.Password.Equals(aPassword)).SingleOrDefault();
 
-           
+                Person aPerson = db.People.Where(x => x.Email == student.Email && x.Password.Equals(student.Password)).SingleOrDefault();
+
+                //int validEmailT = validEmailI + validEmailS;
                 if (aPerson != null)
                 {
                     //return HttpNotFound("Email Non Correcte");
@@ -86,7 +90,10 @@ namespace ContosoUniversity.Controllers
         
 
             List<SelectListItem> myList = new List<SelectListItem>();
-         
+            //var data = new[]{
+            //     new SelectListItem{ Value="1",Text="Student"},
+            //     new SelectListItem{ Value="2",Text="Instructor"},
+            // };
             myList.Add(new SelectListItem { Value = "1", Text = "Student" });
             myList.Add(new SelectListItem { Value = "2", Text = "Instructor" });
 
@@ -148,14 +155,10 @@ namespace ContosoUniversity.Controllers
 
                         //st.FilePaths = new List<FilePath>();
                         //st.FilePaths.Add(photo);
-                       
+                       // BAL.StudentBAL aStudent = new BAL.StudentBAL();
 
                         //My Register method for a new account
-                       aStudent.TestRegisteringStudent(User,db).FilePaths.Add(photo);
-
-                        db.Entry(aStudent.TestRegisteringStudent(User, db)).State = EntityState.Modified;
-                        db.SaveChanges();
-
+                        aStudent.TestRegisteringStudent(User,db);
                         return RedirectToAction("Index", "Student");
 
                     }
