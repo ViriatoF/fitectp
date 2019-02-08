@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ContosoUniversity.DAL;
 using ContosoUniversity.Models;
+using ContosoUniversity.Filters;
 using System.Data.Entity.Infrastructure;
 
 namespace ContosoUniversity.Controllers
@@ -17,6 +18,8 @@ namespace ContosoUniversity.Controllers
         private SchoolContext db = new SchoolContext();
 
         // GET: Course
+        //[AutoFilter]
+
         public ActionResult Index(int? SelectedDepartment)
         {
             var departments = db.Departments.OrderBy(q => q.Name).ToList();

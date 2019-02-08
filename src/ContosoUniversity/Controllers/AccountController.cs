@@ -33,7 +33,7 @@ namespace ContosoUniversity.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult Index([Bind(Include = "Email,Password")]string aEmail, string aPassword)
+        public ActionResult Index(PersonRegisterVM UserLog)
         {
             //string a = student.Email;
             if (!ModelState.IsValid)
@@ -45,10 +45,10 @@ namespace ContosoUniversity.Controllers
                 
 
 
-                Person aPerson = db.People.Where(x => x.Email == aEmail && x.Password.Equals(aPassword)).SingleOrDefault();
+                Person aPerson = db.People.FirstOrDefault(x => x.Email == UserLog.Email && x.Password ==UserLog.Password);
 
            
-                if (aPerson != null)
+                if (aPerson == null)
                 {
                     //return HttpNotFound("Email Non Correcte");
                     TempData["ErrorMessage"] = "Invalid Email or Password";
@@ -148,13 +148,14 @@ namespace ContosoUniversity.Controllers
 
                         //st.FilePaths = new List<FilePath>();
                         //st.FilePaths.Add(photo);
-                       
+
 
                         //My Register method for a new account
-                       aStudent.TestRegisteringStudent(User,db).FilePaths.Add(photo);
+                        //aStudent.TestRegisteringStudent(User,db).FilePaths.Add(photo);
+                        aStudent.TestRegisteringStudent(User, db);
 
-                        db.Entry(aStudent.TestRegisteringStudent(User, db)).State = EntityState.Modified;
-                        db.SaveChanges();
+                        //db.Entry(aStudent.TestRegisteringStudent(User, db)).State = EntityState.Modified;
+                        //db.SaveChanges();
 
                         return RedirectToAction("Index", "Student");
 
