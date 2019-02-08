@@ -15,6 +15,12 @@ namespace ContosoUniversity.Controllers
     {
         private SchoolContext db = new SchoolContext();
 
+        public SchoolContext DbContext
+        {
+            get { return db; }
+            set { db = value; }
+        }
+
         // GET: Account
         [HttpGet]
         public ActionResult Index()
@@ -103,15 +109,23 @@ namespace ContosoUniversity.Controllers
         [HttpPost]
         public ActionResult Register(PersonRegisterVM User, HttpPostedFileBase file)
         {
+            //an object to have access to the tests methodes
+            BAL.StudentBAL aStudent = new BAL.StudentBAL();
+
+            //My Register method to register a new account
+            aStudent.TestRegisteringStudent(User, db);
             if (ModelState.IsValid)
             {
+                //prepraing  a test
+               // aStudent.TestRegisteringStudentExist(User, db);
+
                 if (db.People.Any(m => m.Email == User.Email))
                 {
                     TempData["errorMail"] = "Email exist already!";
                     return RedirectToAction("Register");
                 }
 
-                //ulpoadinf image png and jpg
+                //ulpoading image png and jpg
 
                 //supporting an image
                 if (file != null && 0 < file.ContentLength)
@@ -142,18 +156,13 @@ namespace ContosoUniversity.Controllers
 
                     if (User.Role == "1")
                     {
-                        Student st = new Student();
-                        st.Email = User.Email;
-                        st.LastName = User.LastName;
-                        st.FirstMidName = User.FirstName;
-                        st.Password = User.Password;
-                        st.EnrollmentDate = DateTime.Now;
-                        st.FilePaths = new List<FilePath>();
-                        st.FilePaths.Add(photo);
 
-                        db.Students.Add(st);
-                        db.SaveChanges();
+                        //st.FilePaths = new List<FilePath>();
+                        //st.FilePaths.Add(photo);
+                       // BAL.StudentBAL aStudent = new BAL.StudentBAL();
 
+                        //My Register method to register a new account
+                        aStudent.TestRegisteringStudent(User,db);
                         return RedirectToAction("Index", "Student");
 
                     }

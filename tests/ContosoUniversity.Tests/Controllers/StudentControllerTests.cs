@@ -25,7 +25,7 @@ namespace ContosoUniversity.Tests.Controllers
             dbContext = new DAL.SchoolContext(this.ConnectionString);
             controllerToTest.DbContext = dbContext;
 
-            
+
         }
 
         [Test]
@@ -82,3 +82,4 @@ namespace ContosoUniversity.Tests.Controllers
         }
     }
 }
+
