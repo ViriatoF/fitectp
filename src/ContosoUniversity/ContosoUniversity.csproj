@@ -219,7 +219,7 @@
     <Compile Include="ViewModels\EnrollmentDateGroup.cs" />
     <Compile Include="ViewModels\InstructorIndexData.cs" />
     <Compile Include="ViewModels\PersonRegisterVM.cs" />
-    <Compile Include="Filters\AutoFilter.cs" />
+    <Compile Include="Filters\AutoAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

@@ -22,11 +22,11 @@ namespace ContosoUniversity.Controllers
             set { db = value; }
         }
 
-        // GET: Account
+        // GET: Account where Index is the Login Action
         [HttpGet]
         public ActionResult Index()
         {
-            var errMsg = TempData["ErrorMessage"] as string; //To import an error message with redirectoaction 
+           // var errMsg = TempData["ErrorMessage"] as string; //To import an error message with redirectoaction 
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace ContosoUniversity.Controllers
                 {
                     Student st = new Student();
                     Session["User"] = st;
-                    return RedirectToAction(actionName: "Index", controllerName: "Student");
+                    return RedirectToAction(actionName: "Index", controllerName: "Home");
                     
                 }
 
@@ -66,7 +66,7 @@ namespace ContosoUniversity.Controllers
                 {
                     Instructor inst = new Instructor();
                     Session["User"] = inst;
-                    return RedirectToAction(actionName: "Index", controllerName: "Instructor");
+                    return RedirectToAction(actionName: "Index", controllerName: "Home");
                     
                 }
                 

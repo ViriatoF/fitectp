@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Filters;
+using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using System.Web.Routing;
+using System.Web.Mvc.Filters;
+using ContosoUniversity.Models;
+
+namespace ContosoUniversity.Filters
+{
+    [AttributeUsage(AttributeTargets.Method)] //type d'application class or method 
+    public class AutoAttribute : System.Web.Mvc.AuthorizeAttribute
+    {
+
+        public string Role { get; set; }
+
+
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        {
+           if (HttpContext.Current.Session["User"] == null)
+           {
+                return false;
+           }
+            else if (Role=="Student" && HttpContext.Current.Session["User"] is Student)
+            {
+                return true;
+            }
+            else
+            {
+                return true;
+            }
+           
+        }
+
+
+
+    }
+}

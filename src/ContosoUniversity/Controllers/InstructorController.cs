@@ -10,24 +10,31 @@ using ContosoUniversity.DAL;
 using ContosoUniversity.Models;
 using ContosoUniversity.ViewModels;
 using System.Data.Entity.Infrastructure;
+using ContosoUniversity.Filters;
 
 namespace ContosoUniversity.Controllers
 {
+    [Auto(Role = "Instructor")] //only the Instructor is authorizied
     public class InstructorController : Controller
     {
         private SchoolContext db = new SchoolContext();
 
         // GET: Instructor
+
         public ActionResult Index(int? id, int? courseID)
         {
 
-            //TODO: Creata an abstract class for authorized method  
+            //TODO: Create an abstract class for authorized method  
             //Access route
             if (Session["User"] != null && Session["User"] is Student)
             {
                 return HttpNotFound();
                 //return RedirectToAction(actionName: "Index", controllerName: "Home");
             }
+
+
+
+
             var viewModel = new InstructorIndexData();
 
             viewModel.Instructors = db.Instructors

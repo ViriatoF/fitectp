@@ -35,7 +35,7 @@
                         LinkPage.Add("Home");
                         LinkPage.Add("Index");
 
-                        if (Session["User"] != null && ViewBag.Title != "Home Page" && ViewBag.Title != "Register")
+                        if (Session["User"] != null) //&& ViewBag.Title != "Home Page" && ViewBag.Title != "Register"
 
                         {
                             <li>@Html.ActionLink("About us", "About", "Home")</li>
