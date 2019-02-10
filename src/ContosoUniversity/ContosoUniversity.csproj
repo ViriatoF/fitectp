@@ -201,9 +201,9 @@
     <Compile Include="Migrations\201411022351064_Inheritance.Designer.cs">
       <DependentUpon>201411022351064_Inheritance.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902080919387_intialTest0.cs" />
-    <Compile Include="Migrations\201902080919387_intialTest0.Designer.cs">
-      <DependentUpon>201902080919387_intialTest0.cs</DependentUpon>
+    <Compile Include="Migrations\201902091552330_Initial.cs" />
+    <Compile Include="Migrations\201902091552330_Initial.Designer.cs">
+      <DependentUpon>201902091552330_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
@@ -217,9 +217,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AssignedCourseData.cs" />
     <Compile Include="ViewModels\EnrollmentDateGroup.cs" />
+    <Compile Include="ViewModels\EnrollmentVM.cs" />
     <Compile Include="ViewModels\InstructorIndexData.cs" />
     <Compile Include="ViewModels\PersonRegisterVM.cs" />
     <Compile Include="Filters\AutoFilter.cs" />
+    <Compile Include="ViewModels\StudentsApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -319,8 +321,8 @@
     <EmbeddedResource Include="Migrations\201411022351064_Inheritance.resx">
       <DependentUpon>201411022351064_Inheritance.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902080919387_intialTest0.resx">
-      <DependentUpon>201902080919387_intialTest0.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902091552330_Initial.resx">
+      <DependentUpon>201902091552330_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
