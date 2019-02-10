@@ -26,11 +26,11 @@ namespace ContosoUniversity.Controllers
 
             //TODO: Create an abstract class for authorized method  
             //Access route
-            if (Session["User"] != null && Session["User"] is Student)
-            {
-                return HttpNotFound();
-                //return RedirectToAction(actionName: "Index", controllerName: "Home");
-            }
+            //if (Session["User"] != null && Session["User"] is Student)
+            //{
+            //    return HttpNotFound();
+            //    //return RedirectToAction(actionName: "Index", controllerName: "Home");
+            //}
 
 
 

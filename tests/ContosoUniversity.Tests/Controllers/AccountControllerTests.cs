@@ -11,7 +11,7 @@ using System.Web.Routing;
 using System.Data;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-
+using System.IO;
 
 namespace ContosoUniversity.Tests.Controllers
 {
@@ -20,6 +20,7 @@ namespace ContosoUniversity.Tests.Controllers
         private MockHttpContextWrapper httpContext;
         private AccountController controllerToTest;
         private SchoolContext dbContext;
+
 
         [SetUp]
         public void Initialize()
@@ -33,19 +34,21 @@ namespace ContosoUniversity.Tests.Controllers
 
 
         [Test]
-        public void Register_Student_With_Exist_Mail_Fail()
+        public void Register_Account_With_Exist_Mail_Fail()
         {
 
             PersonRegisterVM newAccount = new PersonRegisterVM();
             newAccount.FirstName = "yahya";
             newAccount.LastName = "khoder";
-            
+            newAccount.Role = "1"; // to test the registring of student or ="2" for isntructor
             newAccount.Email = "yahya@gmail.com";
             newAccount.Password = "InvalidPassword";
+            newAccount.ImagePath = "~/si.png";
+            newAccount.ImageType = "image/png";
 
-            BAL.StudentBAL bal = new BAL.StudentBAL();
+            BAL.StudentBAL bal = new BAL.StudentBAL(dbContext);
             
-            bal.TestRegisteringStudentExist(newAccount, dbContext);
+            bal.AccountExist(newAccount);
 
             Student st = this.dbContext.Students.FirstOrDefault(e => e.Email == newAccount.Email);
 
@@ -57,25 +60,52 @@ namespace ContosoUniversity.Tests.Controllers
      
 
         [Test]
-        public void Register_Student_With_Non_Existing_Login_And_Good_Password_Success()
+        public void Register_Account_With_Login_And_Good_Password_Success()
         {
             PersonRegisterVM newAccount = new PersonRegisterVM();
-            newAccount.FirstName = "test";
-            newAccount.LastName = "test";
-            //newAccount.Role
-            newAccount.Email = "test@yahoo.fr";
+            newAccount.FirstName = "test1";
+            newAccount.LastName = "test1";
+            newAccount.Role = "1";
+            newAccount.Email = "test1@yahoo.fr";
             newAccount.Password = "123456";
+            newAccount.ImagePath="~/si.png";
+            newAccount.ImageType = "image/png";
 
-            BAL.StudentBAL bal = new BAL.StudentBAL();
+            BAL.StudentBAL bal = new BAL.StudentBAL(dbContext);
 
-            bal.TestRegisteringStudent(newAccount, dbContext);
+            bal.RegisteringNewAccount(newAccount);
 
             Student st = this.dbContext.Students.FirstOrDefault(e => e.Email == newAccount.Email);
 
 
             Assert.That(st != null);
         }
+        [Test]
+        public void Register_Account_With_Path_Image_Success()
+        {
+           //Test with images crieteras in progress
 
-       
+            PersonRegisterVM newAccount = new PersonRegisterVM();
+            newAccount.FirstName = "test1";
+            newAccount.LastName = "test1";
+            newAccount.Role = "1";
+            newAccount.Email = "test1@yahoo.fr";
+            newAccount.Password = "123456";
+            newAccount.ImagePath = "~/si.png";
+            newAccount.ImageType = "image/png";
+
+            BAL.StudentBAL bal = new BAL.StudentBAL(dbContext);
+
+
+
+            Student st = this.dbContext.Students.FirstOrDefault(e => e.FilePaths.Any(c=>c.FileName ==newAccount.ImagePath));
+
+
+            Assert.That(st != null);
+        }
+
+
+        
+
     }
 }

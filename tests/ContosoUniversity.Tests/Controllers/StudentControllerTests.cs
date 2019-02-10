@@ -4,6 +4,7 @@ using ContosoUniversity.Models;
 using ContosoUniversity.Tests.Tools;
 using Moq;
 using NUnit.Framework;
+using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -33,10 +34,15 @@ namespace ContosoUniversity.Tests.Controllers
         {
             string expectedLastName = "Dubois";
             string expectedFirstName = "George";
+            string expectedEmail = "George@hotmail.fr";
+            string expectedPassowrd = "George";
+            DateTime date = DateTime.Now; 
 
             EntityGenerator generator = new EntityGenerator(dbContext);
-            Student student = generator.CreateStudent(expectedLastName, expectedFirstName);
+            Student student = generator.CreateStudent(expectedLastName, expectedFirstName, expectedEmail, expectedPassowrd, date);
 
+
+            
             var result = controllerToTest.Details(student.ID) as ViewResult;
             var resultModel = result.Model as Student;
 
@@ -64,15 +70,18 @@ namespace ContosoUniversity.Tests.Controllers
             string expectedLastName = "Wood";
             string previousLastName = "Dubois";
             string previousFirstName = "George";
+            string previuosEmail = "George@hotmail.fr";
+            string previuosPassowrd = "George";
+            DateTime date = DateTime.Now;
 
 
             EntityGenerator generator = new EntityGenerator(dbContext);
-            Student student = generator.CreateStudent(previousLastName, previousFirstName);
+            Student student = generator.CreateStudent(previousLastName, previousFirstName, previuosEmail, previuosPassowrd,date);
             student.LastName = expectedLastName;
 
             FormDataHelper.PopulateFormData(controllerToTest, student);
 
-            var result = controllerToTest.EditPost(student.ID) as ViewResult;
+            var result = controllerToTest.EditPost(student.ID,null) as ViewResult;
 
             Student savedStudent = dbContext.Students.Find(student.ID);
 

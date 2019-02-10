@@ -97,18 +97,22 @@ namespace ContosoUniversity.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(PersonRegisterVM User, HttpPostedFileBase file)
+        public ActionResult Register(PersonRegisterVM User, HttpPostedFileBase Image)
         {
             //an object to have access to the tests methodes
-            BAL.StudentBAL aStudent = new BAL.StudentBAL();
+            BAL.StudentBAL aStudent = new BAL.StudentBAL(db);
 
-          
+            //proprities of image to give of view model
+            User.ImagePath = System.IO.Path.GetFileName(Image.FileName);
+            User.ImageType = Image.ContentType;
+
+
             if (ModelState.IsValid)
             {
                 //prepraing  a test 
                // aStudent.TestRegisteringStudentExist(User, db);
 
-                if (aStudent.TestRegisteringStudentExist(User, db))
+                if (aStudent.AccountExist(User))
                 {
                     TempData["errorMail"] = "Email exist already!";
                     return RedirectToAction("Register");
@@ -117,74 +121,42 @@ namespace ContosoUniversity.Controllers
                 //ulpoading image png and jpg
 
                 //supporting an image
-                if (file != null && 0 < file.ContentLength)
+                if (Image != null && 0 < Image.ContentLength)
                 {
 
-                    var photo = new FilePath
-                    {
-                        FileName = System.IO.Path.GetFileName(file.FileName),
-                        FileType = FileType.png
-                    };
+                    //accessible image format
+
+                    var validImageTypes = new List<string>() {"image/png","image/jpeg" };
 
                     //only format png and jpg
-                    if (file.ContentType != "image/" + FileType.png.ToString() && file.ContentType != "image/" + FileType.jpeg.ToString())
+
+                    //old way with enum
+                    if (!validImageTypes.Contains(Image.ContentType))
                     {
-                        photo.FileType = FileType.png;
+                                         
                         TempData["ErrorUploading"] = "Format Image not supported!";
                         return RedirectToAction("Register");
                     }
 
                     //MAxByteValue 100kb;
-                    if (file.ContentLength > 100 * 1000)
+                    if (Image.ContentLength > 100 * 1000)
                     {
                         TempData["ErrorUploadingTaille"] = "Size Image not supported!";
                         return RedirectToAction("Register");
                     }
+                    //My Register method for a new student account and adding the person to a session to keep it Login
+                    
+                    Session["User"] =  aStudent.RegisteringNewAccount(User);
 
+                    
 
-
-                    if (User.Role == "1")
-                    {
-
-                        //st.FilePaths = new List<FilePath>();
-                        //st.FilePaths.Add(photo);
-
-
-                        //My Register method for a new account
-                        //aStudent.TestRegisteringStudent(User,db).FilePaths.Add(photo);
-                        aStudent.TestRegisteringStudent(User, db);
-
-                        //db.Entry(aStudent.TestRegisteringStudent(User, db)).State = EntityState.Modified;
-                        //db.SaveChanges();
-
-                        return RedirectToAction("Index", "Student");
-
-                    }
-
-                  
-
-
-                    if (User.Role == "2")
-                    {
-                        Instructor ins = new Instructor();
-                        ins.Email = User.Email;
-                        ins.LastName = User.LastName;
-                        ins.FirstMidName = User.FirstName;
-                        ins.Password = User.Password;
-                        ins.HireDate = DateTime.Now;
-
-                        ins.FilePaths = new List<FilePath>();
-                        ins.FilePaths.Add(photo);
-
-                        db.Instructors.Add(ins);
-                        db.SaveChanges();
-                        return RedirectToAction("Index", "Instructor");
-
-
-                    }
+                    return RedirectToAction(nameof(Index),"Student");
+                   
                 }
             }
             
+            
+
             List<SelectListItem> myList = new List<SelectListItem>();
             
             myList.Add(new SelectListItem { Value = "1", Text = "Student" });

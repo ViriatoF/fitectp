@@ -201,9 +201,9 @@
     <Compile Include="Migrations\201411022351064_Inheritance.Designer.cs">
       <DependentUpon>201411022351064_Inheritance.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902080919387_intialTest0.cs" />
-    <Compile Include="Migrations\201902080919387_intialTest0.Designer.cs">
-      <DependentUpon>201902080919387_intialTest0.cs</DependentUpon>
+    <Compile Include="Migrations\201902100918155_TestRiew.cs" />
+    <Compile Include="Migrations\201902100918155_TestRiew.Designer.cs">
+      <DependentUpon>201902100918155_TestRiew.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
@@ -319,8 +319,8 @@
     <EmbeddedResource Include="Migrations\201411022351064_Inheritance.resx">
       <DependentUpon>201411022351064_Inheritance.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902080919387_intialTest0.resx">
-      <DependentUpon>201902080919387_intialTest0.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902100918155_TestRiew.resx">
+      <DependentUpon>201902100918155_TestRiew.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

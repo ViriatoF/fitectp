@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using System.Collections.Generic;
 using ContosoUniversity.ViewModels;
+using System.Web;
 
 namespace ContosoUniversity.Controllers
 {
@@ -81,15 +82,23 @@ namespace ContosoUniversity.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = db.Students.Include(i => i.FilePaths).SingleOrDefault(x=>x.ID==id);
+            //Student student = db.Students.Include(i => i.FilePaths).SingleOrDefault(x => x.ID == id);
+            Student student = db.Students.FirstOrDefault(x => x.ID == id);
 
             // Ajout de la liste des cours afin de pouvoir l'utiliser dans le Détails
-            ViewBag.ListCourses = db.Courses.Where(m=> m.Title != null).ToList() ;
+            ViewBag.ListCourses = db.Courses.Where(m => m.Title != null).ToList();
 
             if (student == null)
             {
                 return HttpNotFound();
             }
+
+            //Adding list of image format to verifie if the type of filePtah are Png or Jpeg --> we can supported a pdf in the future 
+
+            var validImageTypes = new List<string>() { "image/png", "image/jpeg" };
+            ViewBag.png = validImageTypes[0];
+            ViewBag.jpeg = validImageTypes[1];
+
             return View(student);
         }
 
@@ -105,7 +114,7 @@ namespace ContosoUniversity.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LastName, FirstMidName, EnrollmentDate")]Student student)
+        public ActionResult Create([Bind(Include = "LastName, FirstMidName,Email,Password, EnrollmentDate")]Student student)
         {
             try
             {
@@ -137,6 +146,8 @@ namespace ContosoUniversity.Controllers
             {
                 return HttpNotFound();
             }
+            
+            
             return View(student);
         }
 
@@ -145,13 +156,30 @@ namespace ContosoUniversity.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPost(int? id)
+        public ActionResult EditPost(int? id,HttpPostedFileBase Image)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var studentToUpdate = db.Students.Find(id);
+
+            //changing the photo
+            if (Image != null)
+            {
+
+                FilePath photo = new FilePath
+                {
+                    FileName = System.IO.Path.GetFileName(Image.FileName),
+                    FileType = Image.ContentType
+                };
+                studentToUpdate.FilePaths.Add(photo);
+            }
+           
+
+            //update the profile picture
             if (TryUpdateModel(studentToUpdate, "",
                new string[] { "LastName", "FirstMidName", "EnrollmentDate" }))
             {
@@ -159,7 +187,9 @@ namespace ContosoUniversity.Controllers
                 {
                     db.SaveChanges();
 
-                    return RedirectToAction("Index");
+                    //to show the change and go direct to the details page with ID
+                    return RedirectToAction(nameof(Details), new { id = studentToUpdate.ID  });
+                    
                 }
                 catch (RetryLimitExceededException /* dex */)
                 {

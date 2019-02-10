@@ -45,6 +45,14 @@ namespace ContosoUniversity.ViewModels
                 return LastName + ", " + FirstName;
             }
         }
-     
+
+        
+        public string ImagePath { get; set; }
+
+        public string ImageType { get; set; }
+
+
+
+
     }
 }
