@@ -15,14 +15,14 @@
 <div>
     <h4>Student</h4>
     <hr />
-    @*Verification if the student have an image png or jpg ; if true   get the name of the first one*@
     @if (Model.FilePaths.Any(f => f.FileType == ViewBag.png || f.FileType == ViewBag.jpeg))
     {
-            <img src="~/Images/@Model.FilePaths.First(f => f.FileType == ViewBag.png || f.FileType == ViewBag.jpeg).FileName" alt="" width="100" height="100" />
-
-
+        
+        <div class="row">
+            <img class="pull-right" src="~/Images/@Model.FilePaths.First(f => f.FileType == ViewBag.png || f.FileType == ViewBag.jpeg).FileName" alt="Photo_de_profil" width="100" height="100" />
+        </div>
     }
-        <dl class="dl-horizontal">
+        <dl class="row dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.LastName)
             </dt>
@@ -72,13 +72,13 @@
                     }
                 </table>
             </dd>
-            <dt>
+            @*<dt>
                 @Html.Label("Inscription Courses")
-            </dt>
+            </dt>*@
 
             <dd>
                 @* On créé un lien pour accéder à la création d'enrollment *@
-                @Html.ActionLink(linkText: " Subscribe ",
+                @Html.ActionLink(linkText: " New Course",
                                                          actionName: "Create",
                                                          controllerName: "Enrollments",
                                                          routeValues: new { id=Model.ID},

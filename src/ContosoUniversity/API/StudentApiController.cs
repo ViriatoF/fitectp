@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,39 +8,48 @@ using System.Web.Http;
 using System.Web.Routing;
 using ContosoUniversity.Models;
 using ContosoUniversity.DAL;
+using ContosoUniversity.ViewModels;
 
 namespace ContosoUniversity.API
 {
-    public class StudentApiController : ApiController
+    public class StudentsController : ApiController
     {
+           
         private SchoolContext db = new SchoolContext();
 
         //Get API/<controller>/id
         [HttpGet]
-        public IHttpActionResult GetStudent(int id)
+        public StudentsApi GetStudent( int id)
         {
-            //On récupère le student en fonction de l'id entré en paramètre
-            var student = db.Students.Find(id);
-            
-            Dictionary<string, object> listProp = new Dictionary<string, object>();
-            
-            //On créé une liste qu'on passera dans le dictionnaire pour les CourseId
-            List<string> listCourseId = new List<string>();
+            //On créé une nouvelle instance de StudentsApi avec lequel on va travailler
+            StudentsApi StudentApi = new StudentsApi();
+            EnrollmentVM EnrApi = new EnrollmentVM();
 
-            listProp.Add("Id : ", student.ID);
-            listProp.Add("Last name : ", student.LastName);
-            listProp.Add("First name : ", student.FirstMidName);
-            listProp.Add("Enrollment date : ", student.EnrollmentDate.ToString());
-            listProp.Add("Enrollments : ", listCourseId);
-            
-            //On ajoute à la liste chaque courseId trouvée
-            foreach (var item in student.Enrollments)
+            //On récupère le student en fonction de l'id entré en paramètre
+            Student aStudent = db.Students.Find(id);
+
+            //On remplit le viewmodel avec les données du student
+            StudentApi.id = aStudent.ID;
+            StudentApi.lastname = aStudent.LastName;
+            StudentApi.firstname = aStudent.FirstMidName;
+            StudentApi.enrollmentdate = aStudent.EnrollmentDate;
+
+            //On créé une variable pour récupérer  le nombre d'enrollments du student
+            var cpt = aStudent.Enrollments.Count();
+
+            //On créé un nouveau tableau pour stocker les informations qu'on va récupérer ensuite
+            EnrollmentVM[] aEnrollments = new EnrollmentVM[cpt];
+
+            for (int i = 0; i < cpt; i++)
             {
-                listCourseId.Add("CourseId : " + item.CourseID);
+                //On récupère les données dont on a besoin et on les rajoute au tableau précédemment créé
+                aEnrollments[i] = new EnrollmentVM { courseId = aStudent.Enrollments.ElementAt(i).CourseID };
             }
             
-            //On retourne le dictionnaire pour l'affichage
-            return Ok(listProp);
+            StudentApi.enrollments = aEnrollments;
+            
+            //On retourne l'objet pour l'affichage
+            return StudentApi;
         }
     }
 }

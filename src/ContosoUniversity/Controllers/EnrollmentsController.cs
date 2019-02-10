@@ -41,9 +41,10 @@ namespace ContosoUniversity.Controllers
         // GET: Enrollments/Create
         public ActionResult Create(int? id)
         {
+            Student aStudent = db.Students.Find(id);
             ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "Title");
             ViewBag.StudentID = new SelectList(db.People, "ID", "LastName");
-            //ViewBag.CurrentStudent = db.Students.FirstOrDefault(e => e.ID == id);
+            ViewBag.CurrentStudent = aStudent.FullName;
             return View();
         }
 
